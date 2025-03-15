@@ -17,9 +17,9 @@ jobs:
         with:
           node-version: 16.x
       - name: Install deps
-        run: cd frontend && npm i
+        run: cd backend && npm i
       - name: Build
-        run: cd frontend && npm run build
+        run: cd backend && npm run build
       - name: Generate Artifact
         run: cd backend/build && zip -r artifact.zip ./ -x '*.git*'
       - name: Store Artifact

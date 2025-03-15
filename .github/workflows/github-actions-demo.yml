@@ -4,6 +4,32 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
-      - run: cd backend
-      - run: npm i
-      - run: npm run build
+     - name: Cache Node Modules
+       id: cache
+       uses: actions/cache@v2
+       with:
+         path: node_modules
+         key: node-modules-cache
+
+     - name: Checkout
+       uses: actions/checkout@v1
+
+     - name: Setup Node
+       uses: actions/setup-node@v1
+       with:
+         node-version: 16.x
+
+      - name: Install deps
+        run: cd frontend && npm i
+
+      - name: Build
+        run: cd frontend && npm run build
+
+      - name: Generate Artifact
+        run: cd backend/build && zip -r artifact.zip ./ -x '*.git*'
+
+      - name: Store Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend-artifact
+          path: backend/build/artifact.zip

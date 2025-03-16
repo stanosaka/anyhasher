@@ -159,11 +159,11 @@ jobs:
      needs: [deploy_to_eb]
      steps:
        - name: Checkout
-         uses: actions/checkout@v1
+         uses: actions/checkout@v2
 
        - name: Run Smoke Test
          run: |
-           export BACKEND_URL=http://foobar.io
+           export BACKEND_URL=http://szhou-app.ap-southeast-2.elasticbeanstalk.com
            cd e2e
            chmod +x backend-smoke.sh
            ./backend-smoke.sh
